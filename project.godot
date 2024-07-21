@@ -11,6 +11,10 @@ config_version=5
 [application]
 
 config/name="PirateSoftwareGameJam2024"
+<<<<<<< Updated upstream
+=======
+run/main_scene="res://TopDownPrototype.tscn"
+>>>>>>> Stashed changes
 config/features=PackedStringArray("4.2", "GL Compatibility")
 config/icon="res://icon.svg"
 
