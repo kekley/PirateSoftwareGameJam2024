@@ -1,0 +1,29 @@
+[gd_scene load_steps=6 format=3 uid="uid://ma7515ckoeui"]
+
+[ext_resource type="Script" path="res://scripts/Player/Player.gd" id="1_berdg"]
+[ext_resource type="Script" path="res://scripts/Player/PlayerController.gd" id="2_lgw41"]
+[ext_resource type="Script" path="res://scripts/Actors/SideScrollingMovement.gd" id="3_c5bwf"]
+[ext_resource type="Texture2D" uid="uid://bjnps6a02plf4" path="res://assets/placeholders/diamond.png" id="4_geat8"]
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_chs6b"]
+polygon = PackedVector2Array(0, -16, 16, 0, 0, 16, -16, 0)
+
+[node name="Player" type="Node2D"]
+position = Vector2(800, 450)
+script = ExtResource("1_berdg")
+
+[node name="PlayerController" type="Node" parent="."]
+script = ExtResource("2_lgw41")
+
+[node name="SideScrollingMovement" type="CharacterBody2D" parent="PlayerController"]
+position = Vector2(800, 450)
+script = ExtResource("3_c5bwf")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="PlayerController/SideScrollingMovement"]
+polygon = PackedVector2Array(16, -1.9, 16, 3, 2, 16, -3, 16, -16, 3.8, -16, -3.8, -3, -15.9, 1.9, -16)
+
+[node name="Sprite2D" type="Sprite2D" parent="PlayerController/SideScrollingMovement"]
+texture = ExtResource("4_geat8")
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="PlayerController/SideScrollingMovement/Sprite2D"]
+occluder = SubResource("OccluderPolygon2D_chs6b")
