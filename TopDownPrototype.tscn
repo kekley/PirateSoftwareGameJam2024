@@ -1,11 +1,42 @@
 [gd_scene load_steps=10 format=3 uid="uid://bf4u4uyefrabp"]
 
-[ext_resource type="Script" path="res://scripts/PlayerTopDown.gd" id="1_smkme"]
 [ext_resource type="Texture2D" uid="uid://bjnps6a02plf4" path="res://assets/placeholders/diamond.png" id="2_ndm08"]
-[ext_resource type="Shader" path="res://TopDownPrototype.gdshader" id="3_cac2k"]
+[ext_resource type="Shader" path="res://assets/shaders/ourple.gdshader" id="3_cac2k"]
 [ext_resource type="Texture2D" uid="uid://bdcis428if5r1" path="res://assets/placeholders/square.png" id="4_1yyal"]
 [ext_resource type="Texture2D" uid="uid://c2shimr3b7nus" path="res://assets/placeholders/rhombus.png" id="5_gpcwa"]
 [ext_resource type="Texture2D" uid="uid://bxsm1wnc6fdhb" path="res://assets/placeholders/light.webp" id="6_ojhjj"]
+
+[sub_resource type="GDScript" id="GDScript_dcv25"]
+script/source = "extends CharacterBody2D
+
+var inputDirection: Vector2;
+@export var acceleration: float = .4
+@export var maxSpeed: float = 400
+@export var friction: float = .2
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	pass # Replace with function body.
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	inputDirection = Input.get_vector(\"Left\", \"Right\", \"Up\", \"Down\")
+
+func _input(event: InputEvent) -> void:
+	pass
+
+func _physics_process(delta: float) -> void:
+	if (inputDirection.x == 0):
+		velocity.x = lerpf(velocity.x, 0, friction)
+	else:
+		velocity.x = lerpf(velocity.x, inputDirection.x * maxSpeed, acceleration)
+		
+	if (inputDirection.y == 0):
+		velocity.y = lerpf(velocity.y, 0, friction)
+	else:
+		velocity.y = lerpf(velocity.y, inputDirection.y * maxSpeed, acceleration)
+	move_and_slide()
+"
 
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_4170h"]
 polygon = PackedVector2Array(0, -16, 16, 0, 0, 16, -16, 0)
@@ -20,7 +51,7 @@ polygon = PackedVector2Array(-2, -9, 2, -9, 16, 0, 2, 8, -2, 8, -16, 0)
 
 [node name="CharacterBody2D" type="CharacterBody2D" parent="."]
 position = Vector2(800, 450)
-script = ExtResource("1_smkme")
+script = SubResource("GDScript_dcv25")
 
 [node name="Sprite2D" type="Sprite2D" parent="CharacterBody2D"]
 texture = ExtResource("2_ndm08")
