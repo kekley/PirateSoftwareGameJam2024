@@ -1,0 +1,55 @@
+[gd_scene load_steps=8 format=3 uid="uid://bxe16uso3scj3"]
+
+[ext_resource type="Shader" path="res://TopDownPrototype.gdshader" id="1_qmtkp"]
+[ext_resource type="Texture2D" uid="uid://bdcis428if5r1" path="res://assets/placeholders/square.png" id="2_lvxoe"]
+[ext_resource type="Script" path="res://scripts/PlayerSideScroller.gd" id="3_6wisr"]
+[ext_resource type="Texture2D" uid="uid://bjnps6a02plf4" path="res://assets/placeholders/diamond.png" id="4_0ta7q"]
+[ext_resource type="Texture2D" uid="uid://bxsm1wnc6fdhb" path="res://assets/placeholders/light.webp" id="5_64xmq"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_no6c1"]
+shader = ExtResource("1_qmtkp")
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_chs6b"]
+polygon = PackedVector2Array(0, -16, 16, 0, 0, 16, -16, 0)
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Background" type="Sprite2D" parent="."]
+z_index = -1
+material = SubResource("ShaderMaterial_no6c1")
+position = Vector2(12, -2)
+scale = Vector2(50, 50)
+texture = ExtResource("2_lvxoe")
+centered = false
+
+[node name="CharacterBody2D" type="CharacterBody2D" parent="."]
+position = Vector2(800, 450)
+script = ExtResource("3_6wisr")
+
+[node name="Sprite2D" type="Sprite2D" parent="CharacterBody2D"]
+texture = ExtResource("4_0ta7q")
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="CharacterBody2D"]
+occluder = SubResource("OccluderPolygon2D_chs6b")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="CharacterBody2D"]
+polygon = PackedVector2Array(16, -1.9, 16, 3, 2, 16, -3, 16, -16, 3.8, -16, -3.8, -3, -15.9, 1.9, -16)
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+position = Vector2(594, 476)
+color = Color(0.0823529, 1, 1, 1)
+shadow_enabled = true
+texture = ExtResource("5_64xmq")
+texture_scale = 5.0
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D"]
+position = Vector2(792, 584)
+scale = Vector2(46, 1)
+texture = ExtResource("2_lvxoe")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
+position = Vector2(792, 584)
+scale = Vector2(46, 1)
+polygon = PackedVector2Array(16, 16, -16, 16, -16, -16, 16, -16)
