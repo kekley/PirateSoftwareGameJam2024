@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://ma7515ckoeui"]
+[gd_scene load_steps=7 format=3 uid="uid://ma7515ckoeui"]
 
 [ext_resource type="Script" path="res://scripts/Player/Player.gd" id="1_berdg"]
 [ext_resource type="Script" path="res://scripts/Player/PlayerController.gd" id="2_lgw41"]
@@ -8,15 +8,16 @@
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_chs6b"]
 polygon = PackedVector2Array(0, -16, 16, 0, 0, 16, -16, 0)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fhffw"]
+size = Vector2(54, 38)
+
 [node name="Player" type="Node2D"]
-position = Vector2(800, 450)
 script = ExtResource("1_berdg")
 
-[node name="PlayerController" type="Node" parent="."]
+[node name="PlayerController" type="Node2D" parent="."]
 script = ExtResource("2_lgw41")
 
 [node name="SideScrollingMovement" type="CharacterBody2D" parent="PlayerController"]
-position = Vector2(800, 450)
 script = ExtResource("3_c5bwf")
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="PlayerController/SideScrollingMovement"]
@@ -27,3 +28,10 @@ texture = ExtResource("4_geat8")
 
 [node name="LightOccluder2D" type="LightOccluder2D" parent="PlayerController/SideScrollingMovement/Sprite2D"]
 occluder = SubResource("OccluderPolygon2D_chs6b")
+
+[node name="Hurtbox" type="Area2D" parent="."]
+collision_layer = 0
+monitoring = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+shape = SubResource("RectangleShape2D_fhffw")
