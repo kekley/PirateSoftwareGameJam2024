@@ -1,0 +1,48 @@
+[gd_scene load_steps=9 format=3 uid="uid://3cos44vpi6or"]
+
+[ext_resource type="Script" path="res://scripts/Actors/Enemies/WanderingEnemy.gd" id="1_iokbw"]
+[ext_resource type="Script" path="res://scripts/Actors/Enemies/WanderingAI.gd" id="2_pflq8"]
+[ext_resource type="Script" path="res://scripts/Actors/SideScrollingMovement.gd" id="3_vocyr"]
+[ext_resource type="Texture2D" uid="uid://df6lrksle7cb5" path="res://assets/placeholders/circle.png" id="4_vlijx"]
+[ext_resource type="Script" path="res://ContactDamage.gd" id="5_62ass"]
+[ext_resource type="Script" path="res://scripts/Actors/Combat.gd" id="6_vng5g"]
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_vub4q"]
+polygon = PackedVector2Array(8, -15.9, 8, -15, 10, -15, 10, -13.5, 15, -9.5, 15, -7.3, 16, -5.8, 16, 5, 14.8, 10, 13.5, 10, 9.5, 15, 7.3, 15, 5.8, 16, -6.7, 16, -10, 14.7, -10, 13.5, -15, 9.5, -15, 7.3, -16, 5.8, -16, -7.1, -15.7, -8, -15, -8, -15, -10, -13.5, -10, -9.5, -15, -7, -15, -5, -15.7, 6.9, -16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_inyya"]
+size = Vector2(34, 36)
+
+[node name="WanderingEnemy" type="Node2D"]
+position = Vector2(457, 552)
+script = ExtResource("1_iokbw")
+
+[node name="WanderingAI" type="Node2D" parent="."]
+script = ExtResource("2_pflq8")
+
+[node name="SideScrollingMovement" type="CharacterBody2D" parent="WanderingAI"]
+script = ExtResource("3_vocyr")
+MAX_SPEED = 100.0
+
+[node name="Sprite2D" type="Sprite2D" parent="WanderingAI/SideScrollingMovement"]
+texture = ExtResource("4_vlijx")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="WanderingAI/SideScrollingMovement"]
+polygon = PackedVector2Array(4, -15, 7, -15, 7, -14, 9, -14, 9, -13, 10, -13, 10, -12, 11, -12, 11, -11, 12, -11, 12, -10, 13, -10, 13, -9, 14, -9, 14, -7, 15, -7, 15, -4, 16, -4, 16, 4, 15, 4, 15, 7, 14, 7, 14, 9, 13, 9, 13, 10, 12, 10, 12, 11, 11, 11, 11, 12, 10, 12, 10, 13, 9, 13, 9, 14, 7, 14, 7, 15, 4, 15, 4, 16, -4, 16, -4, 15, -7, 15, -7, 14, -9, 14, -9, 13, -10, 13, -10, 12, -11, 12, -11, 11, -12, 11, -12, 10, -13, 10, -13, 9, -14, 9, -14, 7, -15, 7, -15, 4, -16, 4, -16, -4, -15, -4, -15, -7, -14, -7, -14, -9, -13, -9, -13, -10, -12, -10, -12, -11, -11, -11, -11, -12, -10, -12, -10, -13, -9, -13, -9, -14, -7, -14, -7, -15, -4, -15, -4, -16, 4, -16)
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="WanderingAI/SideScrollingMovement"]
+occluder = SubResource("OccluderPolygon2D_vub4q")
+
+[node name="ContactDamageHitbox" type="Area2D" parent="WanderingAI/SideScrollingMovement"]
+disable_mode = 2
+collision_layer = 32768
+collision_mask = 32768
+script = ExtResource("5_62ass")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WanderingAI/SideScrollingMovement/ContactDamageHitbox"]
+shape = SubResource("RectangleShape2D_inyya")
+
+[node name="Combat" type="Node2D" parent="WanderingAI"]
+script = ExtResource("6_vng5g")
+
+[connection signal="area_entered" from="WanderingAI/SideScrollingMovement/ContactDamageHitbox" to="WanderingAI" method="_on_contact_damage_hitbox_area_entered"]

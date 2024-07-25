@@ -28,4 +28,6 @@ func move(direction: Vector2) -> void:
 
 func jump()->void:
 	if is_on_floor():
+		position = Vector2(position.x,position.y)
 		velocity.y = JUMP_VELOCITY
+
