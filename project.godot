@@ -13,6 +13,7 @@ config_version=5
 config/name="PirateSoftwareGameJam2024"
 run/main_scene="res://SideScrollerPrototype.tscn"
 config/features=PackedStringArray("4.2", "GL Compatibility")
+run/max_fps=60
 config/icon="res://icon.svg"
 
 [debug]
@@ -27,6 +28,7 @@ gdscript/warnings/unsafe_call_argument=2
 
 window/size/viewport_width=1280
 window/size/viewport_height=720
+window/vsync/vsync_mode=0
 
 [editor]
 

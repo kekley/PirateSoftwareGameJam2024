@@ -1,9 +1,9 @@
 class_name Combat
 extends Node2D
 
-@export var HP :int
-@export var ATTACK : int
-@export var DEFENSE : int
+@export var HP :int = 10
+@export var ATTACK : int = 5
+@export var DEFENSE : int = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -12,16 +12,17 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	pass
+	if(HP<=0):
+		die()
 
-func meleeAttack() -> void:
-	pass
+func meleeAttack(target:Combat) -> void:
+	target.takeDamage(ATTACK)
 	
 func shootProjectile() -> void:
 	pass
 
 func die() -> void:
-	pass
+	print("man im dead")
 	
-func takeDamage() ->void:
-	pass
+func takeDamage(attackValue:int) ->void:
+	HP-=attackValue-DEFENSE
