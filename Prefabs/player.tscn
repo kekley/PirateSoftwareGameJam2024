@@ -1,12 +1,14 @@
-[gd_scene load_steps=8 format=3 uid="uid://ma7515ckoeui"]
+[gd_scene load_steps=9 format=3 uid="uid://ma7515ckoeui"]
 
 [ext_resource type="Script" path="res://scripts/Player/Player.gd" id="1_berdg"]
 [ext_resource type="Script" path="res://scripts/Player/PlayerController.gd" id="2_lgw41"]
 [ext_resource type="Script" path="res://scripts/Actors/SideScrollingMovement.gd" id="3_c5bwf"]
+[ext_resource type="Material" uid="uid://d10slkynxulo6" path="res://assets/shaders/WorldShading.tres" id="4_doymm"]
 [ext_resource type="Texture2D" uid="uid://bjnps6a02plf4" path="res://assets/placeholders/diamond.png" id="4_geat8"]
 [ext_resource type="Script" path="res://scripts/Actors/Combat.gd" id="5_1khb0"]
 
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_chs6b"]
+cull_mode = 2
 polygon = PackedVector2Array(0, -16, 16, 0, 0, 16, -16, 0)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_b6vnj"]
@@ -22,9 +24,10 @@ script = ExtResource("2_lgw41")
 script = ExtResource("3_c5bwf")
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="PlayerController/SideScrollingMovement"]
-polygon = PackedVector2Array(16, -1.9, 16, 3, 2, 16, -3, 16, -16, 3.8, -16, -3.8, -3, -15.9, 1.9, -16)
+polygon = PackedVector2Array(0, -16, 16, 0, 0, 16, -16, 0)
 
 [node name="Sprite2D" type="Sprite2D" parent="PlayerController/SideScrollingMovement"]
+material = ExtResource("4_doymm")
 texture = ExtResource("4_geat8")
 
 [node name="LightOccluder2D" type="LightOccluder2D" parent="PlayerController/SideScrollingMovement/Sprite2D"]
@@ -36,6 +39,7 @@ collision_layer = 32768
 collision_mask = 32768
 
 [node name="Hurtbox" type="CollisionShape2D" parent="PlayerController/SideScrollingMovement/Hurtbox"]
+modulate = Color(0, 0, 0, 0)
 shape = SubResource("RectangleShape2D_b6vnj")
 
 [node name="Combat" type="Node2D" parent="PlayerController"]
